@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Module>
+  <Name value="Petty Kingdoms" />
+  <Id value="$modulename$" />
+  <Version value="v$version$" />
+  <Official value="false" />
+  <DefaultModule value="false" />
+  <SingleplayerModule value="true" />
+  <MultiplayerModule value="false" />
+  <DependedModules>
+    <DependedModule Id="Native" />
+    <DependedModule Id="SandBoxCore" />
+    <DependedModule Id="Sandbox" />
+    <DependedModule Id="StoryMode" />
+    <DependedModule Id="CustomBattle" />
+  </DependedModules>
+  <!-- Community Dependency Metadata -->
+  <!-- https://github.com/BUTR/Bannerlord.BUTRLoader#for-modders -->
+  <DependedModuleMetadatas>
+    <DependedModuleMetadata id="Native" order="LoadAfterThis" />
+    <DependedModuleMetadata id="SandBoxCore" order="LoadAfterThis" />
+    <DependedModuleMetadata id="Sandbox" />
+    <DependedModuleMetadata id="StoryMode" order="LoadAfterThis" />
+    <DependedModuleMetadata id="CustomBattle" order="LoadAfterThis" />
+  </DependedModuleMetadatas>
+  <SubModules>
+    <SubModule>
+      <Name value="$modulename$" />
+      <DLLName value="Int19h.Bannerlord.$modulename$.dll" />
+      <SubModuleClassType value="Int19h.Bannerlord.$modulename$.SubModule" />
+      <Tags />
+    </SubModule>
+  </SubModules>
+</Module>
