@@ -12,6 +12,12 @@
     <GameFolder Condition="'$(GameFolder)' == ''">C:\Program Files (x86)\Steam\steamapps\common\Mount &amp; Blade II Bannerlord</GameFolder>
     <AssemblyName>Int19h.Bannerlord.$(MSBuildProjectName)</AssemblyName>
     <RootNamespace>Int19h.Bannerlord.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+    <Product>Petty Kingdoms for Mount &amp; Blade II: Bannerlord</Product>
+    <Copyright>Copyright © 2022 Pavel "int19h" Minaev</Copyright>
+    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+    <PackageProjectUrl>https://github.com/int19h/Bannerlord.PettyKingdoms</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/int19h/Bannerlord.PettyKingdoms</RepositoryUrl>
+    <Authors>Pavel Minaev</Authors>
   </PropertyGroup>
 
   <ItemGroup>

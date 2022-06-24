@@ -1,4 +1,6 @@
-﻿using TaleWorlds.CampaignSystem;
+﻿using System.Linq;
+using TaleWorlds.CampaignSystem;
+using TaleWorlds.CampaignSystem.Actions;
 
 namespace Int19h.Bannerlord.PettyKingdoms {
     internal class PettyKingdomsCampaignBehavior : CampaignBehaviorBase {
@@ -13,6 +15,12 @@ namespace Int19h.Bannerlord.PettyKingdoms {
         }
 
         private void OnDailyTick() {
+            foreach (var kingdom in Kingdom.All.ToArray()) {
+                if (!kingdom.IsEliminated && kingdom.Fiefs.Count == 0 && kingdom.Clans.Count <= 1) {
+                    ChangeKingdomAction.ApplyByLeaveWithRebellionAgainstKingdom(kingdom.RulingClan, false);
+                    DestroyKingdomAction.Apply(kingdom);
+                }
+            }
         }
     }
 }
