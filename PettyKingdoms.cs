@@ -30,10 +30,13 @@ namespace Int19h.Bannerlord.PettyKingdoms {
 
         [CommandLineFunctionality.CommandLineArgumentFunction("create", "petty_kingdoms")]
         public static void Create() {
-            CulturePalette.Refresh();
+            CulturalPalette.Refresh();
             var clans = Clan.All.Where(c => c.Kingdom != null).ToArray();
 
             foreach (var clan in clans) {
+                if (clan == Clan.PlayerClan) {
+                    continue;
+                }
                 while (true) {
                     var town = clan.Fiefs.Where(f => f.IsTown).Skip(1).FirstOrDefault()?.Settlement;
                     if (town == null) {
@@ -48,7 +51,7 @@ namespace Int19h.Bannerlord.PettyKingdoms {
             }
 
             foreach (var clan in clans) {
-                if (!clan.Fiefs.Any(f => f.IsTown)) {
+                if (clan == Clan.PlayerClan || !clan.Fiefs.Any(f => f.IsTown)) {
                     continue;
                 }
                 while (true) {
@@ -69,7 +72,7 @@ namespace Int19h.Bannerlord.PettyKingdoms {
                 }
             }
 
-            HashSet<Clan> indeps = new();
+            var palettes = new CulturalPalettes();
             foreach (var clan in clans) {
                 foreach (var fief in clan.Fiefs) {
                     fief.GarrisonParty.MemberRoster.Reset();
@@ -80,14 +83,14 @@ namespace Int19h.Bannerlord.PettyKingdoms {
                     ChangeKingdomAction.ApplyByLeaveWithRebellionAgainstKingdom(clan, false);
                 }
 
-                var capital = clan.Fiefs.FirstOrDefault(f => f.IsTown)?.Settlement;
+                var capital = clan.Fiefs.OrderByDescending(f => f.Prosperity)
+                    .FirstOrDefault(f => f.IsTown)?.Settlement;
                 if (capital == null) {
-                    SetClanColor(clan, CulturePalette.NeutralColor);
-                    indeps.Add(clan);
+                    SetClanColor(clan, palettes.NeutralColor);
                     continue;
                 }
 
-                SetClanColor(clan, CulturePalette.GetPalette(clan.Culture).ClaimColor());
+                SetClanColor(clan, palettes[clan.Culture].ClaimColor());
                 var nameObject = new TextObject(GetPolityName(clan.Culture, capital));
                 if (clan == oldKingdom.RulingClan) {
                     oldKingdom.ChangeKingdomName(nameObject, nameObject);
@@ -100,11 +103,6 @@ namespace Int19h.Bannerlord.PettyKingdoms {
                 } else {
                     Campaign.Current.KingdomManager.CreateKingdom(nameObject, nameObject, clan.Culture, clan, encyclopediaTitle: nameObject);
                 }
-            }
-
-            foreach (var c in indeps) {
-                var b = c.Banner;
-                System.Diagnostics.Debug.WriteLine($"{c} {c.Color:X08} {c.Color2:X08} {b?.GetPrimaryColor():X08} {b?.GetSecondaryColor():X08}");
             }
         }
 
