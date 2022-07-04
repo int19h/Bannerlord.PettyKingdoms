@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.Actions;
 using TaleWorlds.CampaignSystem.Settlements;
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
+using TaleWorlds.MountAndBlade;
 
 namespace Int19h.Bannerlord.PettyKingdoms {
-    internal static class PettyKingdoms {
+    public static class PettyKingdoms {
         private static string GetPolityName(CultureObject culture, Settlement capital) =>
             culture.StringId switch {
                 "aserai" =>
@@ -29,14 +28,15 @@ namespace Int19h.Bannerlord.PettyKingdoms {
             };
 
         [CommandLineFunctionality.CommandLineArgumentFunction("create", "petty_kingdoms")]
-        public static void Create() {
-            CulturalPalette.Refresh();
-            var clans = Clan.All.Where(c => c.Kingdom != null).ToArray();
+        public static string Create(List<string>? strings = null) {
+            var clans =
+                from c in Clan.All
+                where c != Clan.PlayerClan && c.Kingdom != null
+                where !c.IsRebelClan && !c.IsClanTypeMercenary
+                orderby (c.Kingdom.RulingClan == c) ? 1 : 0
+                select c;
 
             foreach (var clan in clans) {
-                if (clan == Clan.PlayerClan) {
-                    continue;
-                }
                 while (true) {
                     var town = clan.Fiefs.Where(f => f.IsTown).Skip(1).FirstOrDefault()?.Settlement;
                     if (town == null) {
@@ -51,7 +51,7 @@ namespace Int19h.Bannerlord.PettyKingdoms {
             }
 
             foreach (var clan in clans) {
-                if (clan == Clan.PlayerClan || !clan.Fiefs.Any(f => f.IsTown)) {
+                if (!clan.Fiefs.Any(f => f.IsTown)) {
                     continue;
                 }
                 while (true) {
@@ -79,9 +79,7 @@ namespace Int19h.Bannerlord.PettyKingdoms {
                 }
 
                 var oldKingdom = clan.Kingdom;
-                if (clan != oldKingdom.RulingClan) {
-                    ChangeKingdomAction.ApplyByLeaveWithRebellionAgainstKingdom(clan, false);
-                }
+                ChangeKingdomAction.ApplyByLeaveWithRebellionAgainstKingdom(clan, false);
 
                 var capital = clan.Fiefs.OrderByDescending(f => f.Prosperity)
                     .FirstOrDefault(f => f.IsTown)?.Settlement;
@@ -92,18 +90,14 @@ namespace Int19h.Bannerlord.PettyKingdoms {
 
                 SetClanColor(clan, palettes[clan.Culture].ClaimColor());
                 var nameObject = new TextObject(GetPolityName(clan.Culture, capital));
-                if (clan == oldKingdom.RulingClan) {
-                    oldKingdom.ChangeKingdomName(nameObject, nameObject);
-                    oldKingdom.SetProperty("Color", clan.Color);
-                    oldKingdom.SetProperty("PrimaryBannerColor", clan.Color);
-                    oldKingdom.SetProperty("Color2", clan.Color2);
-                    oldKingdom.SetProperty("SecondaryBannerColor", clan.Color2);
-                    oldKingdom.Banner.ChangePrimaryColor(clan.Color);
-                    oldKingdom.Banner.ChangeIconColors(clan.Color2);
-                } else {
-                    Campaign.Current.KingdomManager.CreateKingdom(nameObject, nameObject, clan.Culture, clan, encyclopediaTitle: nameObject);
+                Campaign.Current.KingdomManager.CreateKingdom(nameObject, nameObject, clan.Culture, clan, encyclopediaTitle: nameObject);
+
+                if (!oldKingdom.Clans.Any()) {
+                    DestroyKingdomAction.Apply(oldKingdom);
                 }
             }
+
+            return "";
         }
 
         private static void SetClanColor(Clan clan, uint color) {

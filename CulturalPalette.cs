@@ -28,9 +28,6 @@ namespace Int19h.Bannerlord.PettyKingdoms {
             return newColor;
         }
 
-        public static void Refresh() {
-        }
-
         internal static double ColorDistance(uint c1, uint c2) =>
             ColorDistance(new HsvColor(c1), new HsvColor(c2));
 
@@ -49,7 +46,7 @@ namespace Int19h.Bannerlord.PettyKingdoms {
     }
 
     internal class CulturalPalettes {
-        private readonly Dictionary<CultureObject, CulturalPalette> palettes = new();
+        private readonly Dictionary<CultureObject, CulturalPalette> palettes;
 
         public uint NeutralColor { get; private set; }
 
