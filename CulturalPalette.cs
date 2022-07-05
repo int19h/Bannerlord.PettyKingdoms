@@ -83,6 +83,7 @@ namespace Int19h.Bannerlord.PettyKingdoms {
 
             // Iterate until either all cultures have enough colors, or there are
             // no more colors left to assign.
+            var assignedColors = new List<uint>();
             while (cultures.Any() && unassignedColors.Any()) {
                 // Pick the culture that currently has the fewest colors.
                 var (culture, palette) = (
@@ -92,10 +93,18 @@ namespace Int19h.Bannerlord.PettyKingdoms {
                     select (c, p)
                 ).First();
 
-                // Claim a color that is the closest match to the culture's base color.
-                var color = unassignedColors.OrderBy(
-                    c => CulturalPalette.ColorDistance(c, culture.Color)
-                ).First();
+                // Assign a color that is the closest match to the culture's base color,
+                // but is sufficiently distinct from other colors that have been picked.
+                var candidates = unassignedColors.OrderBy(c => CulturalPalette.ColorDistance(c, culture.Color));
+                uint color = 0;
+                for (double d = 0.03; color == 0; d /= 2) {
+                    color = (
+                        from c in candidates
+                        where assignedColors.All(ac => CulturalPalette.ColorDistance(c, ac) >= d)
+                        select c
+                    ).FirstOrDefault();
+                }
+                assignedColors.Add(color);
                 palette.Colors.Add(color);
                 unassignedColors.Remove(color);
 

@@ -5,7 +5,6 @@ using TaleWorlds.CampaignSystem.Actions;
 using TaleWorlds.CampaignSystem.Settlements;
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
-using TaleWorlds.MountAndBlade;
 
 namespace Int19h.Bannerlord.PettyKingdoms {
     public static class PettyKingdoms {
