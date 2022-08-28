@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<base xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" type="string">
+  <tags>
+    <tag language="English" />
+  </tags>
+  <strings>
+    <string id="LGvW6yLI" text="Kingdom of {CAPITAL}" />
+    <string id="PVhGQ6QH" text="Emirate of {CAPITAL}" />
+    <string id="OE333RZB" text="Coiced of {CAPITAL}" />
+    <string id="ucTClFY1" text="Despotate of {CAPITAL}" />
+    <string id="ERyfR5VC" text="Ulus of {CAPITAL}" />
+    <string id="8LoRBACH" text="Principality of {CAPITAL}" />
+    <string id="pfYBvZ0B" text="Duchy of {CAPITAL}" />
+  </strings>
+</base>

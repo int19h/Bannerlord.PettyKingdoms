@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<base xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" type="string">
+  <tags>
+    <tag language="Русский" />
+  </tags>
+  <strings>
+    <string id="LGvW6yLI" text="Королевство {CAPITAL}" />
+    <string id="PVhGQ6QH" text="Эмират {CAPITAL}" />
+    <string id="OE333RZB" text="Пятина {CAPITAL}" />
+    <string id="ucTClFY1" text="Деспотат {CAPITAL}" />
+    <string id="ERyfR5VC" text="Улус {CAPITAL}" />
+    <string id="8LoRBACH" text="Княжество {CAPITAL}" />
+    <string id="pfYBvZ0B" text="Графство {CAPITAL}" />
+  </strings>
+</base>

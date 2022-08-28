@@ -8,23 +8,28 @@ using TaleWorlds.Localization;
 
 namespace Int19h.Bannerlord.PettyKingdoms {
     public static class PettyKingdoms {
-        private static string GetPolityName(CultureObject culture, Settlement capital) =>
-            culture.StringId switch {
-                "aserai" =>
-                    $"Emirate of {capital.Name}",
-                "battania" =>
-                    $"Coiced of {capital.Name}",
-                "empire" =>
-                    $"Despotate of {capital.Name}",
-                "khuzait" =>
-                    $"Ulus of {capital.Name}",
-                "sturgia" =>
-                    $"Principality of {capital.Name}",
-                "vlandia" =>
-                    $"Duchy of {capital.Name}",
-                _ =>
-                    $"Kingdom of {capital.Name}",
-            };
+        private static TextObject GetPolityName(CultureObject culture, Settlement capital) {
+            var text = new TextObject(
+                culture.StringId switch {
+                    "aserai" =>
+                        "{=PVhGQ6QH}Emirate of {CAPITAL}",
+                    "battania" =>
+                        "{=OE333RZB}Coiced of {CAPITAL}",
+                    "empire" =>
+                        "{=ucTClFY1}Despotate of {CAPITAL}",
+                    "khuzait" =>
+                        "{=ERyfR5VC}Ulus of {CAPITAL}",
+                    "sturgia" =>
+                        "{=8LoRBACH}Principality of {CAPITAL}",
+                    "vlandia" =>
+                        "{=pfYBvZ0B}Duchy of {CAPITAL}",
+                    _ =>
+                        "{=LGvW6yLI}Kingdom of {CAPITAL}",
+                }
+            );
+            text.SetTextVariable("CAPITAL", capital.Name);
+            return text;
+        }
 
         [CommandLineFunctionality.CommandLineArgumentFunction("create", "petty_kingdoms")]
         public static string Create(List<string>? strings = null) {
@@ -88,7 +93,7 @@ namespace Int19h.Bannerlord.PettyKingdoms {
                 }
 
                 SetClanColor(clan, palettes[clan.Culture].ClaimColor());
-                var nameObject = new TextObject(GetPolityName(clan.Culture, capital));
+                var nameObject = GetPolityName(clan.Culture, capital);
                 Campaign.Current.KingdomManager.CreateKingdom(nameObject, nameObject, clan.Culture, clan, encyclopediaTitle: nameObject);
 
                 if (!oldKingdom.Clans.Any()) {
