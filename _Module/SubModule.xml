@@ -8,21 +8,8 @@
   <SingleplayerModule value="true" />
   <MultiplayerModule value="false" />
   <DependedModules>
-    <DependedModule Id="Native" />
-    <DependedModule Id="SandBoxCore" />
-    <DependedModule Id="Sandbox" />
-    <DependedModule Id="StoryMode" />
-    <DependedModule Id="CustomBattle" />
+    <DependedModule Id="Native" DependentVersion="e1.8.0" />
   </DependedModules>
-  <!-- Community Dependency Metadata -->
-  <!-- https://github.com/BUTR/Bannerlord.BUTRLoader#for-modders -->
-  <DependedModuleMetadatas>
-    <DependedModuleMetadata id="Native" order="LoadAfterThis" />
-    <DependedModuleMetadata id="SandBoxCore" order="LoadAfterThis" />
-    <DependedModuleMetadata id="Sandbox" />
-    <DependedModuleMetadata id="StoryMode" order="LoadAfterThis" />
-    <DependedModuleMetadata id="CustomBattle" order="LoadAfterThis" />
-  </DependedModuleMetadatas>
   <SubModules>
     <SubModule>
       <Name value="$modulename$" />
