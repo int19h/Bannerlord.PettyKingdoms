@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Version>0.2.0</Version>
+    <Version>0.2.1</Version>
     <TargetFramework>net472</TargetFramework>
     <Platforms>x64</Platforms>
     <LangVersion>10.0</LangVersion>
@@ -13,7 +13,7 @@
     <AssemblyName>Int19h.Bannerlord.$(MSBuildProjectName)</AssemblyName>
     <RootNamespace>Int19h.Bannerlord.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
     <Product>Petty Kingdoms for Mount &amp; Blade II: Bannerlord</Product>
-    <Copyright>Copyright © 2022 Pavel "int19h" Minaev</Copyright>
+    <Copyright>Copyright © 2022-2023 Pavel "int19h" Minaev</Copyright>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/int19h/Bannerlord.PettyKingdoms</PackageProjectUrl>
     <RepositoryUrl>https://github.com/int19h/Bannerlord.PettyKingdoms</RepositoryUrl>

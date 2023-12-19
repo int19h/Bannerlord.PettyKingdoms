@@ -8,7 +8,7 @@
   <SingleplayerModule value="true" />
   <MultiplayerModule value="false" />
   <DependedModules>
-    <DependedModule Id="Native" DependentVersion="e1.8.0" />
+    <DependedModule Id="Native" DependentVersion="v1.2.7" />
   </DependedModules>
   <SubModules>
     <SubModule>
