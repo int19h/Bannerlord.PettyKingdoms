@@ -79,7 +79,7 @@ namespace Int19h.Bannerlord.PettyKingdoms {
             var palettes = new CulturalPalettes();
             foreach (var clan in clans) {
                 foreach (var fief in clan.Fiefs) {
-                    fief.GarrisonParty.MemberRoster.Reset();
+                    fief?.GarrisonParty?.MemberRoster?.Reset();
                 }
 
                 var oldKingdom = clan.Kingdom;
